@@ -9,7 +9,7 @@ val appVersionName = "1.0.0"
 
 android {
     namespace = "com.netfie.pay_checker.pay_checker"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -21,7 +21,7 @@ android {
     defaultConfig {
         applicationId = "com.netfie.pay_checker.pay_checker"
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 36
         
         // Direct version assignment in Gradle
         versionCode = appVersionCode
