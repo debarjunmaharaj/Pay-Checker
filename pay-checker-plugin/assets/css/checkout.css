@@ -1,0 +1,987 @@
+/* ==========================================================================
+   ApexPay / Pay Checker - Modern Fluid 2-Column Checkout System (Bright UI)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --pc-bg: #f8fafc;
+  --pc-card-bg: #ffffff;
+  --pc-card-border: #e2e8f0;
+  --pc-input-bg: #ffffff;
+  --pc-input-border: #cbd5e1;
+  --pc-brand: #4f46e5;
+  --pc-brand-hover: #4338ca;
+  --pc-brand-glow: rgba(79, 70, 229, 0.18);
+  --pc-accent: #0284c7;
+  --pc-emerald: #059669;
+  --pc-emerald-bg: #ecfdf5;
+  --pc-emerald-border: #a7f3d0;
+  --pc-text-main: #0f172a;
+  --pc-text-muted: #64748b;
+  --pc-radius-card: 20px;
+  --pc-radius-input: 12px;
+}
+
+/* Page Background Wrapper */
+body.woocommerce-checkout {
+  background-color: var(--pc-bg) !important;
+  color: var(--pc-text-main) !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Ambient Subtle Background */
+.pay-checker-glow-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.pay-checker-glow-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.45;
+}
+.pay-checker-glow-1 {
+  top: -120px;
+  left: -80px;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.08) 0%, transparent 70%);
+}
+.pay-checker-glow-2 {
+  top: 40%;
+  right: -100px;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.07) 0%, transparent 70%);
+}
+.pay-checker-glow-3 {
+  bottom: -100px;
+  left: 25%;
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
+}
+
+/* Main Checkout Wrapper */
+.woocommerce-checkout,
+.woocommerce-checkout .woocommerce {
+  position: relative;
+  z-index: 1;
+}
+
+.woocommerce-checkout .woocommerce {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 30px 16px 70px;
+}
+
+/* Modern Top Header / Trust Bar */
+.pay-checker-top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 22px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--pc-card-border);
+}
+.pay-checker-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pay-checker-brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4f46e5 0%, #0284c7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+}
+.pay-checker-brand-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+.pay-checker-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.pay-checker-security-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #065f46;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+/* 2-Column Grid Layout directly on form.woocommerce-checkout */
+form.woocommerce-checkout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 440px !important;
+  gap: 32px !important;
+  align-items: start !important;
+  width: 100% !important;
+  float: none !important;
+}
+
+#pay_checker_trust_header {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+}
+
+#customer_details {
+  grid-column: 1 !important;
+  width: 100% !important;
+  margin: 0 0 24px 0 !important;
+}
+
+.woocommerce-additional-fields {
+  grid-column: 1 !important;
+  width: 100% !important;
+  margin: 0 0 24px 0 !important;
+}
+
+#pay_checker_payment_card {
+  grid-column: 1 !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+#order_review_heading {
+  display: none !important;
+}
+
+#order_review {
+  grid-column: 2 !important;
+  grid-row: 2 / span 5 !important;
+  position: sticky !important;
+  top: 24px !important;
+  width: 100% !important;
+  float: none !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 1024px) {
+  form.woocommerce-checkout {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  #order_review {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    position: static !important;
+  }
+}
+
+/* Bright Clean Cards */
+.pay-checker-section-card,
+.pay-checker-order-summary-card,
+.woocommerce-checkout #customer_details,
+.woocommerce-checkout .woocommerce-additional-fields {
+  background: var(--pc-card-bg);
+  border: 1px solid var(--pc-card-border);
+  border-radius: var(--pc-radius-card);
+  padding: 30px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .pay-checker-section-card,
+  .pay-checker-order-summary-card,
+  .woocommerce-checkout #customer_details,
+  .woocommerce-checkout .woocommerce-additional-fields {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+}
+
+/* Section Header */
+.pay-checker-section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.pay-checker-step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--pc-brand);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: 0 0 0 4px var(--pc-brand-glow);
+  flex-shrink: 0;
+}
+.pay-checker-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.pay-checker-section-desc {
+  font-size: 12px;
+  color: var(--pc-text-muted);
+  margin: 3px 0 0;
+}
+
+/* WooCommerce Customer Details Restyling */
+#customer_details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100% !important;
+  float: none !important;
+  margin: 0 0 24px 0 !important;
+}
+#customer_details .col-1,
+#customer_details .col-2 {
+  float: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+.woocommerce-billing-fields h3,
+.woocommerce-shipping-fields h3,
+.woocommerce-additional-fields h3 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  margin: 0 0 18px 0 !important;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.woocommerce-billing-fields h3::before {
+  content: "1";
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--pc-brand);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 0 0 4px var(--pc-brand-glow);
+}
+
+/* Form Controls & Inputs */
+.woocommerce form .form-row {
+  margin-bottom: 16px !important;
+  padding: 0 !important;
+}
+.woocommerce form .form-row label {
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  font-weight: 700 !important;
+  color: #334155 !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+}
+.woocommerce form .form-row .required {
+  color: #ef4444 !important;
+}
+
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row textarea,
+.woocommerce form .form-row select,
+.pay-checker-field-group input {
+  width: 100% !important;
+  background: var(--pc-input-bg) !important;
+  border: 1.5px solid var(--pc-input-border) !important;
+  border-radius: var(--pc-radius-input) !important;
+  color: #0f172a !important;
+  font-size: 14px !important;
+  padding: 12px 16px !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
+  font-family: inherit !important;
+}
+.woocommerce form .form-row input.input-text:focus,
+.woocommerce form .form-row textarea:focus,
+.woocommerce form .form-row select:focus,
+.pay-checker-field-group input:focus {
+  border-color: var(--pc-brand) !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15) !important;
+}
+.woocommerce form .form-row input::placeholder,
+.woocommerce form .form-row textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Payment Methods Section */
+#payment,
+.woocommerce-checkout-payment {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+#payment ul.wc_payment_methods,
+.woocommerce-checkout-payment ul.payment_methods {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 0 20px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  border: none !important;
+}
+#payment ul.wc_payment_methods li.wc_payment_method,
+.woocommerce-checkout-payment ul.payment_methods li {
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 16px !important;
+  padding: 16px 20px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  position: relative;
+}
+#payment ul.wc_payment_methods li.wc_payment_method:hover {
+  border-color: #cbd5e1 !important;
+  background: #fafafa !important;
+}
+#payment ul.wc_payment_methods li.wc_payment_method label {
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  color: #0f172a !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin: 0 !important;
+}
+#payment ul.wc_payment_methods li.wc_payment_method input[type="radio"] {
+  accent-color: var(--pc-brand) !important;
+  width: 18px !important;
+  height: 18px !important;
+  cursor: pointer !important;
+  margin: 0 8px 0 0 !important;
+}
+#payment ul.wc_payment_methods li.wc_payment_method div.payment_box {
+  background: transparent !important;
+  border: none !important;
+  padding: 12px 0 4px 0 !important;
+  margin: 0 !important;
+  color: var(--pc-text-muted) !important;
+  font-size: 13px !important;
+}
+#payment ul.wc_payment_methods li.wc_payment_method div.payment_box::before {
+  display: none !important;
+}
+
+/* Selected Payment Method Highlight */
+#payment ul.wc_payment_methods li.wc_payment_method:has(input[type="radio"]:checked),
+#payment ul.wc_payment_methods li.wc_payment_method.pc-selected {
+  border-color: var(--pc-brand) !important;
+  background: #f5f3ff !important;
+  box-shadow: 0 0 0 1px var(--pc-brand), 0 4px 14px rgba(79, 70, 229, 0.1) !important;
+}
+
+/* ==========================================================================
+   Pay Checker Provider Grid & Cards (bKash, Nagad, Rocket, Upay)
+   ========================================================================== */
+.pay-checker-checkout-container {
+  margin-top: 14px;
+}
+.pay-checker-gateway-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pay-checker-badge-instant {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #065f46;
+}
+.pay-checker-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  animation: pcBlink 1.5s infinite;
+}
+@keyframes pcBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+.pay-checker-gateway-hint {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.pay-checker-provider-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (min-width: 640px) {
+  .pay-checker-provider-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.pay-checker-provider-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px 12px 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+.pay-checker-provider-card:hover {
+  border-color: var(--pc-brand);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.12);
+}
+.pay-checker-provider-card.selected {
+  border-color: var(--pc-brand);
+  background: #f5f3ff;
+  box-shadow: 0 0 0 2px var(--pc-brand), 0 8px 20px rgba(79, 70, 229, 0.18);
+}
+.pay-checker-card-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--pc-brand);
+  color: #ffffff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.pay-checker-provider-card.selected .pay-checker-card-check {
+  display: flex;
+}
+.pay-checker-provider-card img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: #ffffff;
+  padding: 4px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+.pay-checker-provider-card:hover img {
+  transform: scale(1.05);
+}
+.pay-checker-provider-card .provider-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: -0.01em;
+}
+.pay-checker-provider-card .provider-action {
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Details Saved Feedback Strip */
+.pay-checker-selected-status {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.pay-checker-status-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pay-checker-status-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #d1fae5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pay-checker-status-title {
+  font-size: 13px;
+  color: #065f46;
+}
+.pay-checker-status-sub {
+  font-size: 11px;
+  color: #047857;
+  font-family: 'Space Mono', monospace;
+}
+.pay-checker-edit-details-btn {
+  background: #ffffff;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.pay-checker-edit-details-btn:hover {
+  background: #059669;
+  color: #ffffff;
+  border-color: #059669;
+}
+
+/* ==========================================================================
+   Bright Clean Modal Overlay
+   ========================================================================== */
+.pay-checker-modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.pay-checker-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.pay-checker-modal-content {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 22px;
+  padding: 30px 28px;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.25);
+  position: relative;
+  transform: scale(0.94) translateY(10px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+.pay-checker-modal-overlay.active .pay-checker-modal-content {
+  transform: scale(1) translateY(0);
+}
+.pay-checker-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  font-size: 20px;
+  line-height: 1;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.pay-checker-modal-close:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+.pay-checker-modal-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.pay-checker-modal-icon-wrap {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 6px;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.pay-checker-modal-icon-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.pay-checker-modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+.pay-checker-modal-sub {
+  font-size: 12px;
+  color: #64748b;
+  margin: 6px 0 0;
+}
+.pay-checker-merchant-box {
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pay-checker-merchant-info {
+  display: flex;
+  flex-direction: column;
+}
+.pay-checker-merchant-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+.pay-checker-merchant-number {
+  font-size: 19px;
+  font-weight: 800;
+  color: #0284c7;
+  letter-spacing: 0.08em;
+  font-family: 'Space Mono', monospace;
+  margin-top: 2px;
+}
+.pay-checker-copy-btn {
+  background: var(--pc-brand);
+  color: #ffffff;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px var(--pc-brand-glow);
+}
+.pay-checker-copy-btn:hover {
+  background: var(--pc-brand-hover);
+  transform: translateY(-1px);
+}
+.pay-checker-copy-btn.copied {
+  background: var(--pc-emerald) !important;
+}
+.pay-checker-field-group {
+  margin-bottom: 16px;
+}
+.pay-checker-field-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #334155;
+  margin-bottom: 6px;
+}
+.pay-checker-confirm-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+.pay-checker-confirm-btn:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
+}
+.pay-checker-confirm-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   RIGHT COLUMN: Dynamic Sticky Order Summary Card (Bright Clean)
+   ========================================================================== */
+.pay-checker-order-summary-card {
+  margin-bottom: 0 !important;
+}
+.pay-checker-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 20px;
+}
+.pay-checker-summary-title {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  letter-spacing: -0.01em;
+}
+.pay-checker-summary-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  background: #ede9fe;
+  border: 1px solid #ddd6fe;
+  color: #6d28d9;
+  border-radius: 9999px;
+}
+
+/* Order Review Table */
+table.woocommerce-checkout-review-order-table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: none !important;
+  margin: 0 0 18px 0 !important;
+  background: transparent !important;
+}
+table.woocommerce-checkout-review-order-table thead {
+  display: none !important;
+}
+table.woocommerce-checkout-review-order-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+table.woocommerce-checkout-review-order-table tbody td {
+  padding: 12px 0 !important;
+  border: none !important;
+  font-size: 14px !important;
+  color: #334155 !important;
+  vertical-align: middle !important;
+  background: transparent !important;
+}
+table.woocommerce-checkout-review-order-table tbody td.product-name {
+  font-weight: 600 !important;
+  color: #0f172a !important;
+}
+table.woocommerce-checkout-review-order-table tbody td.product-name .product-quantity {
+  font-size: 12px;
+  font-weight: 700;
+  background: #f1f5f9;
+  padding: 2px 7px;
+  border-radius: 6px;
+  color: #475569;
+  margin-left: 6px;
+}
+table.woocommerce-checkout-review-order-table tbody td.product-total {
+  text-align: right !important;
+  font-weight: 700 !important;
+  font-family: 'Space Mono', monospace;
+  color: #0f172a !important;
+}
+
+/* Totals / Footer Section */
+table.woocommerce-checkout-review-order-table tfoot tr {
+  border-top: 1px solid #f1f5f9;
+}
+table.woocommerce-checkout-review-order-table tfoot th,
+table.woocommerce-checkout-review-order-table tfoot td {
+  padding: 10px 0 !important;
+  border: none !important;
+  font-size: 13px !important;
+  color: var(--pc-text-muted) !important;
+  background: transparent !important;
+}
+table.woocommerce-checkout-review-order-table tfoot td {
+  text-align: right !important;
+  color: #0f172a !important;
+  font-weight: 600 !important;
+}
+table.woocommerce-checkout-review-order-table tfoot tr.cart-subtotal th,
+table.woocommerce-checkout-review-order-table tfoot tr.cart-subtotal td {
+  padding-top: 16px !important;
+}
+table.woocommerce-checkout-review-order-table tfoot tr.order-total {
+  border-top: 2px solid #e2e8f0 !important;
+}
+table.woocommerce-checkout-review-order-table tfoot tr.order-total th {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  padding-top: 16px !important;
+}
+table.woocommerce-checkout-review-order-table tfoot tr.order-total td {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  padding-top: 16px !important;
+  font-family: 'Space Mono', monospace;
+  color: #4f46e5 !important;
+}
+
+/* Place Order Button Container */
+.pay-checker-order-summary-card .place-order,
+#payment .place-order {
+  padding: 0 !important;
+  margin: 16px 0 0 0 !important;
+  float: none !important;
+  width: 100% !important;
+}
+#place_order,
+button#place_order.button.alt {
+  width: 100% !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  padding: 16px 28px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  text-transform: none !important;
+  box-sizing: border-box !important;
+}
+#place_order:hover,
+button#place_order.button.alt:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.45) !important;
+}
+#place_order:active,
+button#place_order.button.alt:active {
+  transform: scale(0.98) !important;
+}
+
+/* Terms & Privacy checkbox */
+.woocommerce-terms-and-conditions-wrapper {
+  margin-bottom: 14px !important;
+  font-size: 12px !important;
+  color: #64748b !important;
+}
+.woocommerce-terms-and-conditions-wrapper a {
+  color: var(--pc-brand) !important;
+  text-decoration: underline !important;
+}
+
+/* Trust Badges in Right Column */
+.pay-checker-trust-badges {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+}
+.pay-checker-trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  text-align: center;
+}
+.pay-checker-trust-item svg {
+  color: #475569;
+  transition: color 0.2s ease;
+}
+.pay-checker-trust-item:hover svg {
+  color: var(--pc-brand);
+}
+.pay-checker-trust-item span {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Hide Default WooCommerce Review Heading */
+#order_review_heading {
+  display: none !important;
+}
+
+/* Responsive Polish */
+@media (max-width: 640px) {
+  .pay-checker-top-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .pay-checker-trust-badges {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .pay-checker-trust-item {
+    flex-direction: row;
+    gap: 10px;
+  }
+}
